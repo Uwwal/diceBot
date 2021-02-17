@@ -32,15 +32,16 @@ const { dice } = require('./dice');
             }
         }) => {
             console.log({ fromQQ, fromQQNickName, remark });
-            //const { id: messageId } = messageChain[0];
-            bot.sendMessage({
-                friend: fromQQ,
-                //quote: messageId,
-                //message: new Message().addText('hello'),
-                messageChain: messageChain
-            });
+            if(messageChain[1].type == 'Plain' && messageChain[1].text[0] == INSTRUCTION_HEAD){
+                if(dice.match(messageChain[1].text)){
+                    bot.sendMessage({
+                        friend: fromQQ,
+                        messageChain: dice.getMessageChain(messageChain, fromQQNickName)
+                    });
+                }
+            }
         });
-
+        
         // 监听群消息事件
         bot.on('GroupMessage', async ({
             messageChain,
