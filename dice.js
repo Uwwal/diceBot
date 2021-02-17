@@ -154,7 +154,10 @@ const information = {
     getStringwithMathFormula: function (sum, mathFormula) {
         //back
         //slice : *120 => ... * 120 = ...
-        return mathFormula[0] + ' ' + mathFormula.slice(1) + ' = ' + dice.workOutwithString(sum.toString() + mathFormula).toFixed(3) + '点. ';
+        if(mathFormula[0] == '/'){
+            return ' ' + mathFormula[0] + ' ' + mathFormula.slice(1) + ' = ' + dice.workOutwithString(sum.toString() + mathFormula).toFixed(2) + '点. ';
+        }
+        return ' ' + mathFormula[0] + ' ' + mathFormula.slice(1) + ' = ' + dice.workOutwithString(sum.toString() + mathFormula) + '点. ';
     },
 
     getEndString: function () {
