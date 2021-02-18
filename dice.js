@@ -162,7 +162,7 @@ const information = {
 
     getEndString: function () {
         //back
-        return this.endString[Math.floor(Math.random()) * this.preface.length];
+        return this.endString[Math.floor(Math.random() * this.preface.length)];
     }
 };
 
