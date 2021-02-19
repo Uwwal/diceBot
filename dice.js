@@ -1,40 +1,26 @@
 'use strict'
 
-const { Message } = require('你的mirai-js路径/src/Mirai-js');
+const { Message } = require('../Mirai-js-master/src/Mirai-js');
+const { Instruction } = require('./instruction');
 
-const dice = {
-    pattern: /^[你的指令头(注:这里是[], 单字符)](?:r([0-9]{0,2}))?d([0-9]{0,2})([+\-*/][0-9]{0,3})?(.*)$/,
+class Dice extends Instruction{
+    constructor(pattern){
+        super({pattern: pattern});
+        this.time = 1;
+        this.face = 100;
+    }
 
-    time: 1,   //次数 对应r
-    face: 100, //面数 对应d 100 = 1~100
-
-    match: function (string) {
-        //检测是否存在匹配
-        //true or false
-        return this.pattern.test(string);
-    },
-
-    getValue: function (string) {
-        //输入 *r3d5+1 吃苹果
-        //返回 *r3d5+1 吃苹果,3,5,+1,吃苹果
-        return this.pattern.exec(string);
-    },
-
-    checkValueisEmpty: function (any) {
-        return any == '' || any == undefined;
-    },
-
-    roll: function (face) {
+    roll(face) {
         if (this.checkValueisEmpty(face)) { face = this.face; }
         //向下取整 face=100 范围为1~100
         return Math.floor(Math.random() * face) + 1;
-    },
+    }
 
-    workOutwithString: function (string) {
+    workOutwithString(string) {
         return eval(string);
-    },
+    }
 
-    getMessageChain: function (messageChain, fromNickname) {
+    getMessageChain(messageChain, fromNickname) {
         // valueList 0: 匹配到的字符串 1:投掷次数 2:骰子面数 3:数学表达式 4:目的
         var valueList = dice.getValue(messageChain[1].text);
 
@@ -106,7 +92,7 @@ const dice = {
         temMessage.addText(backString);
 
         return temMessage.getMessageChain();
-    },
+    }
 
 };
 
@@ -148,7 +134,7 @@ const information = {
 
     getRollNumberEndString: function (sum) {
         //back
-        return ' }. 共' + sum.toString() + ' ';
+        return ' }. 共' + sum.toString();
     },
 
     getStringwithMathFormula: function (sum, mathFormula) {
@@ -166,6 +152,8 @@ const information = {
     }
 };
 
+const dice = new Dice(/^(?:r([0-9]{0,2}))?d([0-9]{0,2})([+\-*/][0-9]{0,3})?(.*)$/); 
+
 module.exports = {
     dice
-};
+}
