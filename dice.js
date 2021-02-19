@@ -20,9 +20,9 @@ class Dice extends Instruction{
         return eval(string);
     }
 
-    getMessageChain(messageChain, fromNickname) {
+    getMessageChain(messageChain, fromNickname, command) {
         // valueList 0: 匹配到的字符串 1:投掷次数 2:骰子面数 3:数学表达式 4:目的
-        var valueList = dice.getValue(messageChain[1].text);
+        var valueList = dice.getValue(command);
 
         var sum = 0;
 
