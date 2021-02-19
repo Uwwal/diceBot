@@ -60,12 +60,17 @@ const { dice } = require('./dice');
             console.log({ fromGroup, groupName, botPermission });
 
             
-            if(messageChain[1].type == 'Plain' && messageChain[1].text[0] == INSTRUCTION_HEAD){
-                if(dice.match(messageChain[1].text)){
-                    bot.sendMessage({
-                        group: fromGroup,
-                        messageChain: dice.getMessageChain(messageChain, fromNickname)
-                    });
+            if (messageChain[1].type == 'Plain') {
+                if (messageChain[1].text[0] == INSTRUCTION_HEAD) {
+                    // INSTRUCTION_HEADaa => aa
+                    var command = messageChain[1].text.split(INSTRUCTION_HEAD)[1];
+
+                    if (dice.match(command)) {
+                        bot.sendMessage({
+                            group: fromGroup,
+                            messageChain: dice.getMessageChain(messageChain, fromNickname)
+                        });
+                    }
                 }
             }
             
