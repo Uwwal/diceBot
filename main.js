@@ -68,7 +68,7 @@ const { dice } = require('./dice');
                     if (dice.match(command)) {
                         bot.sendMessage({
                             group: fromGroup,
-                            messageChain: dice.getMessageChain(messageChain, fromNickname)
+                            messageChain: dice.getMessageChain(messageChain, fromNickname,command);
                         });
                     }
                 }
