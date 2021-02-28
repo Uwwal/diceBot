@@ -152,7 +152,7 @@ const information = {
     }
 };
 
-const dice = new Dice(/^(?:r([0-9]{0,2}))?d([0-9]{0,2})([+\-*/][0-9]{0,3})?(.*)$/); 
+const dice = new Dice(/^(?:r([0-9]{0,2}))?d([0-9]{0,2})([+\-*/][0-9]{1,3})?(.*)$/); 
 
 module.exports = {
     dice
