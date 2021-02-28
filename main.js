@@ -40,6 +40,19 @@ const { dice } = require('./dice');
                     });
                 }
             }
+            if (messageChain[1].type == 'Plain') {
+                if (messageChain[1].text[0] == INSTRUCTION_HEAD) {
+                    // INSTRUCTION_HEADaa => aa
+                    var command = messageChain[1].text.slice(1);
+
+                    if (dice.match(command)) {
+                        bot.sendMessage({
+                            friend: fromQQ,
+                            messageChain: dice.getMessageChain(messageChain, fromQQNickname,command);
+                        });
+                    }
+                }
+            }
         });
         
         // 监听群消息事件
@@ -63,7 +76,7 @@ const { dice } = require('./dice');
             if (messageChain[1].type == 'Plain') {
                 if (messageChain[1].text[0] == INSTRUCTION_HEAD) {
                     // INSTRUCTION_HEADaa => aa
-                    var command = messageChain[1].text.split(INSTRUCTION_HEAD)[1];
+                    var command = messageChain[1].text.slice(1);
 
                     if (dice.match(command)) {
                         bot.sendMessage({
